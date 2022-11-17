@@ -1,0 +1,160 @@
+﻿@using webtest01.Models
+@using System.Web.Configuration;
+@model IQueryable<StoreInfo.ClickStoreCardOut>
+@{
+    ViewBag.Title = "ShowStoreNoSignIn";
+    string googleMap = WebConfigurationManager.AppSettings["GoogleMap"];
+    int test = 0;
+    if (Session["Store"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutStore.cshtml";
+    }
+    else if (Session["Customer"] != null)
+    {
+        test = Convert.ToInt32(Session["Customer"]);
+        Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    }
+    else
+    {
+        test = 0;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    };
+
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5 align-items-sm-baseline">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="position-relative overflow-hidden p-5 pe-0">
+                    <div style="display:block;width: auto;height: 250px;">
+                        <div style="float: right;display:block;">
+                            <img src="@Model.FirstOrDefault().Picture" width="300px" height="200px">
+                        </div>
+                        <h1 class="mb-4">店家資訊</h1>
+                        <p class="mb-4">店名：@Model.FirstOrDefault().Store_Name</p>
+                        <p class="mb-4">評價：<span>@ViewBag.Star_Rating_Avg</span> <i class="fas fa-star fa-1x"></i></p>
+                    </div>
+                    <div>
+                        <p class="mb-4">簡介：@Model.FirstOrDefault().Introduce</p>
+                        <p class="mb-4">連絡電話：@Model.FirstOrDefault().Phone</p>
+                        <p class="mb-4"><i class="fa fa-thumb-tack fa-1x mb-3 fa-fw text-primary" aria-hidden="true"></i>營業日期地點：</p>
+                        @foreach (var x in ViewBag.schedule)
+                        {   //放營業地點的
+                            <p class="mb-4">@x.Punch_Start 至 @x.Punch_End </p>
+                            <p class="mb-4">@(x.Address_City + x.Address_Local + x.Store_Address )</p>
+                        }
+                        <hr>
+                        @Html.ActionLink("點 我 看 菜 單", "Product_Customer", "Product", new { id = Model.FirstOrDefault().storeID }, new { @class = "btn btn-primary py-3 px-5" })
+                    </div>
+                </div>
+                <div>
+                    <div id="mapDiv" style="width: 400px;height:600px">
+
+                    </div>
+                </div>
+            </div>
+            @*評論*@
+            <div class="col-lg-6 wow fadeIn position-relative" data-wow-delay="0.5s">
+                <div style="width: auto; height:928px;overflow: auto;">
+                    <h3 class="mb-4">@Model.FirstOrDefault().Store_Name</h3>
+                    <h3 class="mb-4">目前有 @ViewBag.commentcount 則評論</h3>
+                    @foreach (var item in ViewBag.comment)
+                    {
+
+                        <div>
+                            <i class="fa fa-user-circle-o fa-3x membericon" aria-hidden="true"></i>
+                            <span class="memo">@item.CustomerName</span>
+                            <p>於 @item.Create_At 評論</p>
+                            <div>
+                                <span class="memo">評分 @item.Star_Rating <i class="fas fa-star fa-1x"></i></span>
+                            </div>
+                            <p>@item.Text_Content</p>
+                            <a href="@item.Picture"><img src="@item.Picture" width="100px" height="70px"></a>
+                        </div>
+                        <hr>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Store Info End-->
+
+@section scripts{
+
+
+    <script>
+        let address = '@(Model.FirstOrDefault().Address_City+Model.FirstOrDefault().Address_Local+Model.FirstOrDefault().Address_Detail)';
+        //放置google地圖
+        var map, geocoder, LatLng;
+
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+
+            var mapOptions = {
+                zoom: 16,
+            };
+            var mapElement = document.getElementById("mapDiv");
+            map = new google.maps.Map(mapElement, mapOptions);
+            geocoder.geocode(
+                { 'address': address }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        if (results) {
+                            new google.maps.Marker({
+                                position: results[0].geometry.location,
+                                map: map
+                            });
+                            map.setCenter(results[0].geometry.location);
+                        }
+                    } else {
+                        alert("Reverse Geocoding failed because:" + status);
+                    }
+            });
+        };
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleMap)&region=TW&callback=initMap"></script>
+
+}
+
+
+@*@section scripts{
+
+        <script>
+
+        以下google地圖完成
+            var map, geocoder,LatLng;
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            LagLng = new google.maps.LatLng(@Model.FirstOrDefault().longitude,@Model.FirstOrDefault().latitude);
+            //建構地圖+中心marker
+            var mapOptions = {
+                center: LagLng,
+                zoom: 16,
+            };
+            var mapElement = document.getElementById("mapDiv");
+            map = new google.maps.Map(mapElement, mapOptions);
+            let marker = new google.maps.Marker({
+                position: LagLng,
+                map: map
+            });
+            //經緯度轉地址
+            geocoder.geocode(
+                { 'latLng': LagLng }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        alert(results[0]);
+                        if (results) {
+                            var adress = document.getElementById("address");
+                            adress.innerHTML = results[0].formatted_address;
+                        }
+                    } else {
+                        alert("Reverse Geocoding failed because:" + status);
+                    }
+                })
+            };
+        </script>
+
+    }*@
+

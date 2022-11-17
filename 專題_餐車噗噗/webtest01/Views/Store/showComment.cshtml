@@ -1,0 +1,56 @@
+﻿@using webtest01.Models
+@model IQueryable<webtest01.Models.StoreInfo.MessageCommentCardOut>
+
+@{
+    ViewBag.Title = "showComment";
+    Layout = "~/Views/Shared/_LayoutStore.cshtml";
+    int count = 0;
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-12">
+                <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                    <h1 class="mb-3">客戶評價</h1>
+                </div>
+                <div>
+                    <span style="float:right">@Html.ActionLink("返回首頁", "Index", "Home")</span>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">序號</th>
+                                <th scope="col">圖片</th>
+                                <th scope="col">客人名稱</th>
+                                <th scope="col">評價</th>
+                                <th scope="col">評論內容</th>
+                                <th scope="col">評論時間</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                                {
+                                  count++;
+
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td><img src="@item.Picture" alt="圖片" width="50px" height="50px" class="menuPhoto1" id="menuPhoto1"></td>
+                                <td>@item.CustomerName</td>
+                                <td>@item.Star_Rating</td>
+                                <td style="max-width:80px">@item.Text_Content</td>
+                                <td>@item.Create_At </td>
+                            </tr>
+                                 }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+}

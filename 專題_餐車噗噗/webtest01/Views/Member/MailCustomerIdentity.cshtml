@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "MailCustomerIdentity";
+}
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row  justify-content-center" style="background-color: 	#FFFFDF;">
+            <div class="lr-content card2" style="margin: 70px;">
+                <div class="lr-head">
+                    <div class="lr-l_b" id="login1" style="text-align:center;background-color:#ffffff;height:80px;width:100%;float:none" ;>
+                        <div></div>
+                        <h1 style="text-align:center">5秒後跳轉回首頁!</h1>
+                        <h2>@Html.ActionLink("不想等待嗎?按此返回首頁", "Index", "Home", null, new { style = "text-align:center" })</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        var clock = setTimeout(home, 5000);
+        function home() {
+            window.location.href = '@Url.Content("~/Home/Index")'
+        }
+
+    </script>
+
+
+}

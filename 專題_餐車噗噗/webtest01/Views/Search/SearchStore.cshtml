@@ -1,0 +1,375 @@
+﻿
+@{
+    ViewBag.Title = "SearchStore";
+    int test = 0;
+    if (Session["Store"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutStore.cshtml";
+    }
+    else if (Session["Customer"] != null)
+    {
+        test = Convert.ToInt32(Session["Customer"]);
+        Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    }
+    else
+    {
+        test = 0;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    };
+}
+
+<script>
+    function fnSearch() {
+        // e.preventDefault();
+        // let search = document.getElementById('btnsearch');
+
+        localStorage.clear();
+        document.getElementById("tab-1").innerHTML = "";
+
+        fetch(('http://localhost:44368/api/StoreSearch'), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(
+                {
+                    "fname": document.getElementById('fname').value,
+                    "fclass": document.getElementById('fclass').value,
+                    "fcity": document.getElementById('fcity').value,
+                    "fdate": document.getElementById('fdate').value,
+                    "ftime": document.getElementById('ftime').value,
+                }
+            )
+        }).then(function (response) {
+            return response.json();
+        }).then((data) => {
+            console.log(data)
+/*            if (data != "") {*/
+                document.getElementById('showcount').innerHTML = `搜尋結果(共${data.length}筆結果)`;
+            //}
+            //else {
+            //    document.getElementById('showcount').innerHTML = `搜尋結果(共${0}筆結果)`;
+            //}
+            
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].Introduce == null) {
+                    data[i].Introduce = "無";
+                }
+                // !##%
+                localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%`));
+
+
+                document.getElementById("tab-1").innerHTML += `<div class="row g-4" style="margin-top:20px;">
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden" id="#result">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/Store/ShowStore?id=${data[i].StoreID}"><img class="img-fluid" src="${data[i].Picture}" alt="" style="width:410px;height:270px;"></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${data[i].Address_Area}</div>
+                                        <div class="round ed-top position-absolute start-0 bottom-0 mx-4 pt-1 px-3" style="background-color:coral; border-radius:15px; color:#FFF;">${data[i].Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="/Store/ShowStore?id=${data[i].StoreID}">${data[i].Store_Name}</a>
+                                        <p><img src="/Content/imgs/icon/locationmark.png" style="margin-right:6px; margin-bottom:4px;">${data[i].Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2" style="cursor:pointer;" onclick="AddLove(${data[i].StoreID})"><img src="/Content/imgs/icon/heart.png" style="margin-right:10px; margin-bottom:4px;">加入我的最愛</small>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" style="width:50%" data-wow-delay="0.1s">
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;">${data[i].StarRating}★</span>
+                             <span>(共有${data[i].ContentCount}則評論)</span>
+
+                             <br>
+                             <br>
+
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">快閃時間</span>
+
+                             <span>${data[i].Punch_Time}</span>
+                             <br>
+                             <br>
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">聯絡電話</span>
+
+                             <span>${data[i].Phone}</span>
+                             <br>
+                             <br>
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">餐車簡介</span>
+                             <div style="margin:20px">
+                                ${data[i].Introduce.replace("\r\n","<br>")}
+                             </div>
+                        </div>
+                    </div>`
+            }
+        })
+    }
+
+
+    //-----------------------------------------------------------------------------------------------------------------------------------AddLove
+        function AddLove(storeid) {
+            var apiurl = "http://localhost:44368/api/CustomerFavorite";
+            if(@test != 0) {
+                    var yes = confirm('要加入我的最愛嗎？');
+                    if (yes) {
+                        fetch(apiurl, {
+                            headers: {
+                                'Accept': 'application/json; charset=utf-8',
+                                'Content-Type': 'application/json; charset=utf-8'
+                            },
+                            method: 'POST',
+                            body: JSON.stringify(
+                                {
+                                    cid: @test,
+                                    sid: storeid,
+                                }
+                            )
+                        }).then(function (response) {
+                            return response.json();
+                        }).then((data) => {
+                            /*console.log(data)*/ // 1 成功 0 失敗
+                            if (data == 1) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '加入成功!',
+                                    text: '已將此筆餐車新增至我的最愛'
+                                })
+                                reloadLove();
+                            } else {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: '已經加入過囉!',
+                                    text: '請至我的最愛查看~'
+                                })
+                            }
+                        })
+
+                    }
+                    else {
+                        /*alert("謝謝支持")*/
+                }
+            } else {
+                Swal.fire({
+                    icon: 'question',
+                    title: '是不是還沒登入?'
+                })
+            }
+        }
+
+
+    window.onload = function () {
+        document.getElementById('btnsearch').addEventListener('click', fnSearch);
+
+        var storeobj;
+        var storeobjarr = [];
+        document.getElementById('showcount').innerHTML = `搜尋結果(共${localStorage.length}筆結果)`;
+
+
+
+        for (let i = 0; i < localStorage.length; i++) {
+
+            storeobj = localStorage.getItem(`${i}`).split('!##%');
+            /*console.log(storeobj);*/
+
+            sID = storeobj[0].replace('"', '');
+            /*console.log(sssID);*/
+
+            storeName = storeobj[1].replace('"', '');
+
+            storeClass = storeobj[2].replace('"', '');
+
+            Picture = storeobj[3].replace('"', '');
+
+            storeArea = storeobj[4].replace('"', '');
+
+            storeAddress = storeobj[5].replace('"', '');
+
+            storeStarrate = storeobj[6].replace('"', '');
+
+            storeCommentCount = storeobj[7].replace('"', '');
+
+            storePunchTime = storeobj[8].replace('"', '');
+
+            storePhone = storeobj[9].replace('"', '');
+
+            if (storeobj[10] == null) {
+                storeIntroduce = "無";
+            }
+            else {
+                storeIntroduce = storeobj[10].replace('"', '');                
+            }
+           
+
+            document.getElementById("tab-1").innerHTML += `<div class="row g-4" style="margin-top:20px;">
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden" id="#result">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="/Store/ShowStore?id=${sID}"><img class="img-fluid" src="${Picture}" alt="" style="width:410px;height:270px;"></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${storeArea}</div>
+                                        <div class="round ed-top position-absolute start-0 bottom-0 mx-4 pt-1 px-3" style="background-color:coral; border-radius:15px; color:#FFF;">${storeClass}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="/Store/ShowStore?id=${sID}">${storeName}</a>
+                                        <p><img src="/Content/imgs/icon/locationmark.png" style="margin-right:6px; margin-bottom:4px;">${storeAddress}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2" style="cursor:pointer;" onclick="AddLove(${sID})"><img src="/Content/imgs/icon/heart.png" style="margin-right:10px; margin-bottom:4px;">加入我的最愛</small>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" style="width:50%" data-wow-delay="0.1s">
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;">${storeStarrate}★</span>
+                             <span>(共有${storeCommentCount}則評論)</span>
+
+                             <br>
+                             <br>
+
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">快閃時間</span>
+
+                             <span>${storePunchTime}</span>
+                             <br>
+                             <br>
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">聯絡電話</span>
+
+                             <span>${storePhone}</span>
+                             <br>
+                             <br>
+                             <span style="background-color: #f28705;
+                             font-size: 20px;
+                             color:white;
+                             padding:10px;
+                             border-radius:20px;
+                             margin-top: 50px;">餐車簡介</span>
+                             <div style="margin:20px">
+                                ${storeIntroduce.replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>").replace("\\r\\n", "<br>")}
+                             </div>
+                        </div>
+                    </div>`
+        }
+    //    localStorage.clear();
+    }
+</script>
+
+<!-- Search Start -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px; margin-top: 50px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-10">
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <div class="form-outline flex-fill mb-md-0">
+                            <input type="date" id="fdate" class="form-control" style="height: 56px;" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select border-0 py-3" id="ftime">
+                            <option value="">營業時間</option>
+                            <option value="06:00-12:00">06:00-12:00</option>
+                            <option value="12:00-18:00">12:00-18:00</option>
+                            <option value="18:00-24:00">18:00-24:00</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select border-0 py-3" id="fclass">
+                            <option value="">食物類別</option>
+                            <option value="台式">台式</option>
+                            <option value="西式">西式</option>
+                            <option value="日式">日式</option>
+                            <option value="美式">美式</option>
+                            <option value="韓式">韓式</option>
+                            <option value="港式">港式</option>
+                            <option value="早午餐">早午餐</option>
+                            <option value="鍋物">鍋物</option>
+                            <option value="炸物">炸物</option>
+                            <option value="飲料">飲料</option>
+                            <option value="甜點">甜點</option>
+                            <option value="咖啡">咖啡</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select border-0 py-3" id="fcity">
+                            <option value="">地點</option>
+                            <option value="基隆市">基隆市</option>
+                            <option value="臺北市">臺北市</option>
+                            <option value="新北市">新北市</option>
+                            <option value="宜蘭縣">宜蘭縣</option>
+                            <option value="新竹市">新竹市</option>
+                            <option value="新竹縣">新竹縣</option>
+                            <option value="桃園市">桃園市</option>
+                            <option value="苗栗縣">苗栗縣</option>
+                            <option value="臺中市">臺中市</option>
+                            <option value="彰化縣">彰化縣</option>
+                            <option value="南投縣">南投縣</option>
+                            <option value="嘉義市">嘉義市</option>
+                            <option value="嘉義縣">嘉義縣</option>
+                            <option value="雲林縣">雲林縣</option>
+                            <option value="臺南市">臺南市</option>
+                            <option value="高雄市">高雄市</option>
+                            <option value="屏東縣">屏東縣</option>
+                            <option value="臺東縣">臺東縣</option>
+                            <option value="花蓮縣">花蓮縣</option>
+                            <option value="金門縣">金門縣</option>
+                            <option value="連江縣">連江縣</option>
+                            <option value="澎湖縣">澎湖縣</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control border-0 py-3" placeholder="店名" id="fname">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark border-0 w-50 py-3" id="btnsearch">搜尋</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search End -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-0 gx-5 align-items-end">
+            <div class="col-lg-6">
+                <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                    <h1 class="mb-3" id="showcount"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane fade show p-0 active">
+
+            </div>
+        </div>
+    </div>
+</div>

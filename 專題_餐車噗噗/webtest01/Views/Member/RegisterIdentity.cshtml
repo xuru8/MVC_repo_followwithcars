@@ -1,0 +1,44 @@
+﻿@{ ViewBag.Title = "RegisterIdentity"; }
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row  justify-content-center" style="background-color: #F1E1FF;">
+            <div id="Card3" class="card3" style="margin:75px;">
+                <div class="card-image3">
+                    <img src="~/Content/imgs/icon/store.png"
+                         alt="">
+                </div>
+                <div class="card-title3" style="text-align:center;">
+                    店家
+                </div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>簡單操作，發布營業資訊</div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>顧客評論，能獲即時回饋</div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>新店宣傳，我們幫您推廣</div>
+                <div class="card-button3" style="text-align:center;">
+                    <div style="padding-top: 11px;">
+                        <div>@Html.ActionLink("註冊", "DoRegisterStore", "Member")</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Card3" class="card3" style="margin:75px;">
+                <div class="card-image3">
+                    <img src="~/Content/imgs/icon/member.png" alt="">
+                </div>
+                <div class="card-title3" style="text-align:center;">
+                    一般用戶
+                </div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>搜尋店家，簡易又快速</div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>星級評論不踩雷</div>
+                <div class="price3"><i class="fa fa-check text-primary me-3"></i>點擊 <i class="fa fa-heart fa-1x heart" style="color:#f26835"></i>，記住好店家</div>
+
+                <div class="card-button3" style="text-align:center;">
+                    <div style="padding-top: 11px;">
+                        <div>@Html.ActionLink("註冊", "DoRegister", "Member")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

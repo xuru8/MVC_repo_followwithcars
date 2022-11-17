@@ -1,0 +1,549 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@*<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 850px;">
+            <h1 class="mb-3">熱搜排行榜</h1>
+            <br>
+            <div class="col-lg-12" style="width:850px;">
+                <button class="btn-59" style="display:inline;" onclick="getData台式()"><span>台式</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData港式()"><span>港式</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData西式()"><span>西式</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData日式()"><span>日式</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData韓式()"><span>韓式</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData美式()"><span>美式</span></button>
+            </div>
+            <br>
+            <div class="col-lg-12" style="width:850px;">
+                <button class="btn-59" style="display:inline;" onclick="getData早午餐()"><span>早午餐</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData鍋物()"><span>鍋物</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData炸物()"><span>炸物</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData咖啡()"><span>咖啡</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData飲料()"><span>飲料</span></button>
+                <button class="btn-59" style="display:inline;" onclick="getData甜點()"><span>甜點</span></button>
+            </div>
+            <br>
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            <div class="row g-4" id="result">
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="./storeInfo.html"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="./storeInfo.html">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="#"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="#"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="#"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="#"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div class="property-item rounded overflow-hidden">
+                                        <div class="position-relative overflow-hidden">
+                                            <a href="#"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">北部</div>
+                                            <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">食物分類</div>
+                                        </div>
+                                        <div class="p-4 pb-0">
+                                            <a class="d-block h5 mb-2" href="">店名</a>
+                                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>地址</p>
+                                        </div>
+                                        <div class="d-flex border-top">
+                                            <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                            <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center" style="margin-top:40px;">
+                                <button class="btn btn-primary py-3 px-5" onclick="">查看更多餐車</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function getData台式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=台式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData港式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=港式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData西式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=西式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData日式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=日式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData韓式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=韓式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData美式() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=美式").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData早午餐() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=早午餐").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData鍋物() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=鍋物").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData炸物() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=炸物").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData咖啡() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=咖啡").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData飲料() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=飲料").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+        function getData甜點() {
+            document.getElementById("result").innerHTML = "";
+            fetch("http://20.24.93.119/api/Store?fclass=甜點").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                let result = document.querySelector("#result");
+                for (let i = 0; i < 6; i++) {
+                    let store = data[i];
+                    console.log(store)
+
+                    result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <a href="./storeInfo.html?id=${store.StoreID}"><img class="img-fluid" src="imgs/Roll02.jpg" alt=""></a>
+                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">${store.Address_City}</div>
+                                        <div class="bg-secondary rounded text-white position-absolute start-70 top-0 m-4 py-1 px-3">${store.StarRating}<i class="fas fa-star fa-1x text-white"></i></div>
+                                        <div class="bg-white round ed-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">${store.Store_Class}</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <a class="d-block h5 mb-2" href="./storeInfo.html?id=${store.StoreID}">${store.Store_Name}</a>
+                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>${store.Address_Detail}</p>
+                                    </div>
+                                    <div class="d-flex border-top">
+                                        <small class="flex-fill text-center border-end py-2"><i class="fa-solid fa-heart text-primary me-2"></i>加入我的最愛</small>
+                                        <small class="flex-fill text-center py-2"><i class="fa-solid fa-user-pen text-primary me-2"></i>評分</small>
+                                    </div>
+                                </div>
+                            </div>`
+                }
+            })
+        }
+
+    </script>
+    
+    }*@

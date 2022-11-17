@@ -1,0 +1,239 @@
+﻿@using webtest01.Models
+@model IQueryable<Store>
+@{
+    ViewBag.Title = "EditStoreBoss";
+    Layout = "~/Views/Shared/_LayoutStore.cshtml";
+}
+@**@
+<section class="vh-60" style="background-color: #eee; margin:10px;">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #F2B705">修改基本資料</p>
+                                @*using (Ajax.BeginForm("EditStoreBoss", "Store", new { id = 1 }, new AjaxOptions { HttpMethod = "Post", OnComplete = "Success", OnFailure = "Fail" }, new { @class = "mx-1 mx-md-4", enctype = "multipart/form-data" }))
+                                    {*@
+                                <form class="mx-1 mx-md-4">
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="email" id="Email" class="form-control" disabled readonly value="@Model.FirstOrDefault().Email_Account" />
+                                            <label class="form-label" for="form3Example3c">電子郵件</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="own_name" class="form-control" value="@Model.FirstOrDefault().Owner_Name" />
+                                            <label class="form-label" for="form3Example1c">負責人</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-phone fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="email" id="Phone" class="form-control" value="@Model.FirstOrDefault().Phone" />
+                                            <label class="form-label" for="form3Example3c">聯絡電話</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fa fa-truck fa-2x me-3 fa-fw" aria-hidden="true"></i>
+                                        <div class="form-outline flex-fill mb-md-0">
+                                            <input type="text" id="CarName" class="form-control" value="@Model.FirstOrDefault().Store_Name" />
+                                            <label class="form-label" for="form3Example1c">餐車名稱</label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fa fa-cutlery fa-2x me-3 fa-fw" aria-hidden="true"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <p>請選擇餐點類別</p>
+                                            <select class="form-select border-3" style="margin-bottom:10px;" name="startTime" id="CarClass">
+                                                <option value="台式">台式</option>
+                                                <option value="港式">港式</option>
+                                                <option value="西式">西式</option>
+                                                <option value="日式">日式</option>
+                                                <option value="韓式">韓式</option>
+                                                <option value="美式">美式</option>
+                                                <option value="早午餐">早午餐</option>
+                                                <option value="鍋物">鍋物</option>
+                                                <option value="炸物">炸物</option>
+                                                <option value="咖啡">咖啡</option>
+                                                <option value="飲料">飲料</option>
+                                                <option value="甜點">甜點</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fa fa-pencil-square-o fa-2x me-3 fa-fw" aria-hidden="true"></i>
+                                        <div class="form-outline flex-fill mb-md-0">
+                                            <label class="form-label" for="form3Example1c">餐車簡介</label>
+                                            <textarea name="" id="introduct" cols="90" rows="5">@Model.FirstOrDefault().Introduce</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="button" class="btn btn-primary btn-lg" onclick="Revise()">儲存修改</button>
+                                    </div>
+                                    @*}*@
+                                </form>
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                <label>
+                                    <img class="storeimg" width="300px" height="200px" id="boss" src="@Model.FirstOrDefault().Picture">
+                                    <input type="file" id="uploadBossPhoto" accept="image/gif, image/jpeg, image/png">
+                                    <i class="fa fa-camera fa-3x photoicon memo" aria-hidden="true"></i>
+                                </label>
+                                <h4> 店家資訊首圖 </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Scripts/projectJS/mainForeditStoreBoss.js"></script>
+
+    <script>
+        $("select option[value='@(Model.FirstOrDefault().Store_Class)']").attr("selected", "selected");
+
+        let uploadfile;
+
+        function upfile() {
+            uploadfile = document.getElementById('uploadBossPhoto').files[0];
+            let readFile = new FileReader();
+            readFile.readAsDataURL(uploadfile);
+            readFile.addEventListener('load', function () {
+                let image = document.getElementById('boss');
+                image.src = readFile.result;
+                image.style.maxWidth = "200px";
+                image.style.maxHeight = "200px";
+            })
+        }
+        function doFirst() {
+            // 跟 HTML 畫面產生關連，再建事件聆聽功能
+            document.getElementById('uploadBossPhoto').onchange = upfile;
+
+        }
+        window.addEventListener('load', doFirst);
+
+
+
+        function Revise() {
+            let Email = $("#Email").val();
+            let own_name = $("#own_name").val();
+            let Phone = $('#Phone').val();
+            let CarName = $("#CarName").val();
+            let introduct = $("#introduct").val();
+            let CarClass = $("#CarClass option:selected").val();
+
+            if (Email == "" || own_name == "" || Phone == "" || CarName == "" || introduct == "") {
+                alert("請填入完整資料/輸入欄不可空白");
+            } else {
+                const formData = new FormData();
+                formData.append("own_name", own_name);
+                formData.append("Phone", Phone);
+                formData.append("Email", Email);
+                formData.append("CarName", CarName,);
+                formData.append("introduct", introduct);
+                formData.append("CarClass", CarClass);
+
+
+                if (uploadfile != undefined) {
+
+                    formData.append("imageFile", uploadfile);
+
+                    $.ajax({
+                        url: '@Url.Content("~/Store/EditStoreBoss")',
+                        method: 'Post',
+                        dataType: 'json',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (datas) {
+                            if (datas.ErrMsg) {
+                                alert(datas.ErrMsg);
+                                return;
+                            }
+                            alert(datas.ResultMsg);
+
+                            window.location.href = '@Url.Content("~/Home/Index")';
+                        },
+                        error: function (err) {
+                            alert(err.responseText + ',' + err.status);
+                        }
+                    });
+
+
+                } else {
+                    $.ajax({
+                        url: '@Url.Content("~/Store/EditStoreBoss")',
+                        method: 'Post',
+                        dataType: 'json',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (datas) {
+                            if (datas.ErrMsg) {
+                                alert(datas.ErrMsg);
+                                return;
+                            }
+                            alert(datas.ResultMsg);
+
+                            window.location.href = '@Url.Content("~/Home/Index")';
+                        },
+                        error: function (err) {
+                            alert(err.responseText + ',' + err.status);
+                        }
+                    });
+                }
+
+            }
+
+
+        }
+
+
+        @*function Success(e) {
+            if (e.responseJSON.ErrMsg) {
+                alert(e.responseJSON.ErrMsg);
+                return;
+            }
+            alert(e.responseJSON.ResultMsg);
+            //這邊之後要改店主自己的資料頁面
+            if (e.responseJSON.relogin == "relogin") {
+                window.location.href = '@Url.Content("~/Home/Index")';
+            }
+            //這邊之後要改店主自己的資料頁面
+            window.location.href = '@Url.Content("~/Home/Index")';
+            console.log(e.responseJSON.ResultMsg);
+            console.log("@Url.Action("Index","Home")");
+            window.location.href="@Url.Action("Index","Home")";
+            <!--//location.href = "~/Home/Index.cshtml";
+        }
+        function Fail(e) {
+            alert("狀態碼: " + e.status + ",說明:" + e.statusText);
+        }*@
+    </script>
+
+
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+}

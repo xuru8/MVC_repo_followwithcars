@@ -1,0 +1,336 @@
+﻿@using System.Web.Configuration;
+@{
+    ViewBag.Title = "DoRegister";
+
+
+}
+
+<div id="VuePage">
+    <section class="vh-60" style="background-color: #eee; margin:10px;">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <div class="row justify-content-center">
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #F2B705">一般用戶註冊</p>
+
+                                    <form class="mx-1 mx-md-4">
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="email" id="UserAccount" class="form-control" />
+                                                <label class="form-label" for="form3Example3c">電子郵件</label>
+                                                <label>　　</label>
+                                                <label id="emailtest" style="font-weight:bold;"></label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="password" id="UserPwd" class="form-control" />
+                                                <label><img src="~/Content/img/eyeclose.png" id="eyes"></label>
+                                                <label class="form-label" for="form3Example4c">密碼</label>
+                                                <label>　　</label>
+                                                <label id="passwordtest" style="font-weight:bold;">
+                                                    (1.至少6個字元 2.須含英數字)
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <input type="password" id="UserPwdck" class="form-control" />
+                                                <label><img src="~/Content/img/eyeclose.png" id="eyes2"></label>
+                                                <label class="form-label" for="form3Example4cd">確認密碼</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-check d-flex justify-content-center mb-5">
+                                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                                            <label class="form-check-label" for="form2Example3">
+                                                我同意收到餐車噗噗的<a href="#!">最新消息/通知!</a>
+                                            </label>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: #F2B705">基本資料</p>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="text" id="Name" class="form-control" />
+                                            <label class="form-label" for="form3Example1c">姓名</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fa fa-phone fa-2x me-3 fa-fw" aria-hidden="true"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <input type="email" id="Phone" class="form-control" />
+                                            <label class="form-label" for="form3Example3c">電話</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fa fa-map-marker fa-2x me-3 fa-fw" aria-hidden="true"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <p></p>
+                                            <div id="twzipcode"></div>
+                                            <p></p>
+
+                                            <input type="text" id="address" class="form-control" placeholder="請輸入街道" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="Register()">註冊</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@section css{
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+@section scripts{
+
+    <script src="~/Scripts/jquery.twzipcode.min.js"></script>
+    <script src="~/Scripts/twzipcode.js"></script>
+    <script>
+        $('#twzipcode').twzipcode({
+            'zipcodeIntoDistrict':true,
+            'css': [
+                'form-select border-3',
+                'form-select border-3'
+            ]
+
+        });
+        /*$("input[name='zipcode']").attr("readonly, true");*/
+        let uploadfile;
+
+        function doFirst() {
+            // 跟 HTML 畫面產生關連，再建事件聆聽功能
+            document.getElementById('uploadFile').onchange = upfile;
+
+        }
+        window.addEventListener('load', doFirst);
+
+        document.getElementById("Name").addEventListener('click', onclickoriginal);
+        document.getElementById("Phone").addEventListener('click', onclickoriginal);
+        document.getElementById("UserAccount").addEventListener('click', onclickoriginal);
+        document.getElementById("UserPwd").addEventListener('click', onclickoriginal);
+        document.getElementById("UserPwdck").addEventListener('click', onclickoriginal);
+        document.getElementById("address").addEventListener('click', onclickoriginal);
+
+        function onclickoriginal() {
+            document.getElementById("Name").style.border = "";
+            document.getElementById("Phone").style.border = "";
+            document.getElementById("UserAccount").style.border = "";
+            document.getElementById("UserPwd").style.border = "";
+            document.getElementById("UserPwdck").style.border = "";
+            document.getElementById("address").style.border = "";
+        }
+
+        document.getElementById("UserAccount").addEventListener('blur', chkEmail);
+
+        function chkEmail() {
+            let ch;
+            let flag3 = false;
+            let emailvalueobj = document.getElementById("UserAccount");
+            let emailvalue = emailvalueobj.value;
+            let emailspanobj = document.getElementById("emailtest");
+
+            for (let i = 0; i < emailvalue.length; i++) {
+                ch = emailvalue.charAt(i);
+                if (ch == "@@") { flag3 = true; }
+                }
+
+                if (flag3) {
+                    emailspanobj.innerHTML = "<img src='/Content/img/yes.png'/>通過!";
+                }
+                else {
+                    emailspanobj.innerHTML = "<img src='/Content/img/no.png'/>請輸入正確格式!";
+                }
+        }
+
+        var imgs = document.getElementById('eyes');
+        var flag = 0;
+        imgs.onclick = function () {
+            if (flag == 0) {
+                UserPwd.type = 'text';
+                eyes.src = "/Content/img/eyeopen.png";
+                flag = 1;
+            } else {
+                UserPwd.type = 'password';
+                eyes.src = "/Content/img/eyeclose.png";
+                flag = 0;
+            }
+        }
+
+        var imgs2 = document.getElementById('eyes2');
+        var flag2 = 0;
+        imgs2.onclick = function () {
+            if (flag2 == 0) {
+                UserPwdck.type = 'text';
+                eyes2.src = "/Content/img/eyeopen.png";
+                flag2 = 1;
+            } else {
+                UserPwdck.type = 'password';
+                eyes2.src = "/Content/img/eyeclose.png";
+                flag2 = 0;
+            }
+        }
+
+         document.getElementById("UserPwd").addEventListener('keyup', chkPassword);
+
+        function chkPassword() {
+            let ch;
+            let flag1 = false, flag2 = false;
+            let pwvalueobj = document.getElementById("UserPwd");
+            let pwvalue = pwvalueobj.value;
+            let pwspanobj = document.getElementById("passwordtest");
+            //條件:(1.不可空白 2.至少6個字 3.必須包含英數字)
+
+
+            if (pwvalue.length >= 6) {
+                for (let i = 0; i < pwvalue.length; i++) {
+                    ch = pwvalue.charAt(i).toUpperCase(); //輸入英文全部轉大寫方便判斷
+                    if (ch >= "A" && ch <= "Z") { flag1 = true; }
+                    //flag1 -> 檢查輸入值是否介於英文A-Z之間
+                    else if (ch >= "0" && ch <= "9") { flag2 = true; }
+                    //flag2 -> 檢查輸入數字是否介於0-9之間
+                }
+
+
+                if (flag1 && flag2) {
+                    pwspanobj.innerHTML = "<img src='/Content/img/yes.png'/>通過!";
+                }
+                else {
+                    pwspanobj.innerHTML = "<img src='/Content/img/no.png'/>必須包含英數字";
+                }
+            }
+            else {
+                pwspanobj.innerHTML = "<img src='/Content/img/no.png'/>密碼需6個字元以上!";
+            }
+        }
+
+
+
+        function Register() {
+            var Name = $('#Name').val().trim();
+            let Phone = $('#Phone').val();
+            let Email = $('#UserAccount').val();
+            let Pwd = $('#UserPwd').val();
+            let PwdCk = $('#UserPwdck').val();
+            let county = $("select[name='county']").val();
+            let district = $("select[name='district']").val();
+            let address = $('#address').val();
+            //alert(Name);
+            //alert(Phone);
+            //alert(Email);
+            //alert(Pwd);
+            //alert(PwdCk);
+
+            if (Name == "" || Phone == "" || Email == "" || Pwd == "" || PwdCk == "" ) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: '請檢查欄位',
+                    text: '欄位需符合格式/不可為空白!'
+                })
+
+                if (Name == "") {
+                    document.getElementById("Name").style.border = "3px solid red";
+                }
+                if (Phone == "") {
+                    document.getElementById("Phone").style.border = "3px solid red";
+                }
+                if (Email == "") {
+                    document.getElementById("UserAccount").style.border = "3px solid red";
+                }
+                if (Pwd == "") {
+                    document.getElementById("UserPwd").style.border = "3px solid red";
+                }
+                if (PwdCk == "") {
+                    document.getElementById("UserPwdck").style.border = "3px solid red";
+                }
+                if (address == "") {
+                    document.getElementById("address").style.border = "3px solid red";
+                }
+            } else {
+                if (Pwd == PwdCk) {
+                    const formData = new FormData();
+                    formData.append("Name", Name);
+                    formData.append("Phone", Phone);
+                    formData.append("Email" ,Email);
+                    formData.append("Pwd", Pwd);
+                    formData.append("county", county,);
+                    formData.append("district", district);
+                    formData.append("address", address);
+
+                    if (uploadfile != undefined) {
+
+                        formData.append("imageFile", uploadfile);
+
+                        $.ajax({
+                            url: '@Url.Content("~/Member/DoRegister")',
+                            method: 'Post',
+                            dataType: 'json',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (datas) {
+                                if (datas.ErrMsg) {
+                                    alert(datas.ErrMsg);
+                                    return;
+                                }
+                                alert(datas.ResultMsg);
+                                window.location.href='@Url.Content("~/Home/Index")'
+                            },
+                            error: function (err) {
+                                alert(err.responseText + ',' + err.status);
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: '@Url.Content("~/Member/DoRegister")',
+                            method: 'Post',
+                            dataType: 'json',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (datas) {
+                                if (datas.ErrMsg) {
+                                    alert(datas.ErrMsg);
+                                    return;
+                                }
+                                alert(datas.ResultMsg);
+                                window.location.href='@Url.Content("~/Home/Index")'
+                            },
+                            error: function (err) {
+                                alert(err.responseText + ',' + err.status);
+                            }
+                        });
+                    }
+
+                } else {
+                     alert("請確認密碼是否一致!");
+                }
+            }
+        }
+    </script>
+}

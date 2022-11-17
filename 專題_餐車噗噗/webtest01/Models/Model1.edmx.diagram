@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a10f1e2b2174b38941915dceef9bc65" Name="Diagram1">
+        <EntityTypeShape EntityType="Model1.Calendar" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Customer_Favorite" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Message_Board" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Store" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Store_Business" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model1.Store_Products" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <AssociationConnector Association="Model1.FK_Store_Business_Calendar" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Customer_Favorite_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Message_Board_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Customer_Favorite_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Message_Board_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Store_Business_Store" ManuallyRouted="false" />
+        <AssociationConnector Association="Model1.FK_Store_Products_Store" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
