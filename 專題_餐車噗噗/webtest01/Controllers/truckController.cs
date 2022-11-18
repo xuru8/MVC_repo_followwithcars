@@ -11,7 +11,8 @@ namespace webtest01.Controllers
     public class truckController : ApiController
     {
         trytryEntities db = new trytryEntities();
-        //-------------------------------------------------------------------------------------------------------------------     
+        //----------------------------------------------------------------------------------------------------------------------------------//
+        //
         // 筆記
         //
         // GET: api/Store
@@ -35,8 +36,9 @@ namespace webtest01.Controllers
         //    return stores.ToList();  //return回去的值
         //}
 
-        // 測試為什麼SEARCH會抓出來怪怪的，先用跑全部的測試--->SQL資料不完整，Join是跑兩邊都要有的資料。
         //
+        // 測試為什麼SEARCH會抓出來怪怪的，先用跑全部的測試--->SQL資料不完整，Join是跑兩邊都要有的資料，可以利用DefaultIfEmpty。
+        //使用 DefaultIfEmpty，如果找不到匹配項，傳統的 Linq Join 可以返回預設物件。因此充當 SQL 的左連線。
         //-------------------------------------------------------------------------------------------------------------------     
         // 單純跑 Store join Store_Business 的資料
         //public IQueryable GetALL()
@@ -70,7 +72,7 @@ namespace webtest01.Controllers
         //-------------------------------------------------------------------------------------------------------------------     
         //筆記
         //
-        // ***利用導覽屬性去直接做到join的效果，用select去挑出有join效果後所需要顯示的欄位。***
+        // ***可利用SQL資料表的導覽屬性去直接做到join的效果，用select去挑出有join效果後所需要顯示的欄位。***
         //public IQueryable GetALL()
         //{
         //    var stores = db.Store
@@ -82,10 +84,12 @@ namespace webtest01.Controllers
         //}
 
         //-------------------------------------------------------------------------------------------------------------------     
-        // GET:跑新店(15天內加入)全部店家 並帶出評分星等。
+        // GET:跑新店(15天內加入)全部店家，並且要有打卡過，然後帶出評分星等。
         public IQueryable GetAll()
         {
-            // 抓到現在的時間，扣掉 10 天，轉成月份帶0的時間(string),重組字串,抓前面8個字
+            // 用現在的時間去和SQL裡的店家帳號建立時間去做比較。
+            // 抓到現在的時間，扣掉 15 天，轉成月份帶0的時間(string),重組字串,抓前面8個字。
+            // DateTime.Now->抓現在時間，AddDays(-15)->加上幾天，ToString("s")->轉成字串("s")格式->2022-10-31T17:04:32。
             searchTimeClass.nowdate = DateTime.Now.AddDays(-15).ToString("s").Replace("-", "").Substring(0, 8);
             var store =
              from z in
@@ -225,6 +229,9 @@ namespace webtest01.Controllers
         // GET: api/Store?id=5
         //依照ajax的網址來做對應的GET(有帶參數)
         IQueryable oneStore;
+        //
+        // 點擊後帶出詳細資料
+        //
         public IQueryable GetSelect(int id)
         {
             var store = from s in db.Store
@@ -256,7 +263,9 @@ namespace webtest01.Controllers
 
 
         //-------------------------------------------------------------------------------------------------------------------
-        // POST抓到我的最愛的店家  (***這邊用Get跟Post真的有差***)
+        //
+        // POST 抓到我的最愛的店家  (***這邊用Get跟Post真的有差***)
+        //
         IQueryable CustomerFavorite;
         public IQueryable PostCustomerFavorite(receiveObj obj)
         {
@@ -398,7 +407,9 @@ namespace webtest01.Controllers
         }
        
         //-------------------------------------------------------------------------------------------------------------------
+        //
         //抓到每個分類的店家 (熱門)
+        //
         public IQueryable GetClass(string fclass)
         {
             var store =
@@ -531,7 +542,9 @@ namespace webtest01.Controllers
         }
 
         //-------------------------------------------------------------------------------------------------------------------
+        //
         //抓到個別區域的店家 (新店)
+        //
 
         public IQueryable GetArea(string farea)
         {

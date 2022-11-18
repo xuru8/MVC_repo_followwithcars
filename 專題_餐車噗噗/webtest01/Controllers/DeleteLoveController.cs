@@ -11,19 +11,9 @@ namespace webtest01.Controllers
     public class DeleteLoveController : ApiController
     {
         trytryEntities db = new trytryEntities();
-        // GET: api/DeleteLove
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/DeleteLove/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/DeleteLove
+        // 刪除我的最愛
         public int Post(receiveObj obj)
         {
             int num = 0;
@@ -54,15 +44,6 @@ namespace webtest01.Controllers
             }
             return num;
         }
-
-        // PUT: api/DeleteLove/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/DeleteLove/5
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

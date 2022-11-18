@@ -19,13 +19,19 @@
 }
 
 <script>
+    //-----------------------------------------------------------------------------------------------------------------------------------fnSearch
+    //
+    // 搜尋店家
+    //
     function fnSearch() {
         // e.preventDefault();
         // let search = document.getElementById('btnsearch');
 
+        // 先清空
         localStorage.clear();
         document.getElementById("tab-1").innerHTML = "";
 
+        // 向API傳遞參數並取得資料(兩邊都是JSON格式)
         fetch(('http://localhost:44368/api/StoreSearch'), {
             method: 'POST',
             headers: {
@@ -42,24 +48,26 @@
                 }
             )
         }).then(function (response) {
+            // 將回傳的json資料，使用fetch API中內建的json method來將json data轉換成javascript object，等於下面的data變數。
             return response.json();
         }).then((data) => {
+            // 檢查用
             console.log(data)
-/*            if (data != "") {*/
-                document.getElementById('showcount').innerHTML = `搜尋結果(共${data.length}筆結果)`;
-            //}
-            //else {
-            //    document.getElementById('showcount').innerHTML = `搜尋結果(共${0}筆結果)`;
-            //}
-            
+            // 渲染出搜尋結果筆數
+            document.getElementById('showcount').innerHTML = `搜尋結果(共${data.length}筆結果)`;                                                
+
+            // 利用迴圈去自動渲染出卡片
             for (var i = 0; i < data.length; i++) {
+                // 如果資料為null將其改變為無再去做顯示。
                 if (data[i].Introduce == null) {
                     data[i].Introduce = "無";
                 }
-                // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage。然後window.location.assign去做跳轉頁面，跳轉後再從localstorage去把資料渲染出來。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%`));
 
-
+                // 利用迴圈和+=去帶資料渲染出卡片。
+                // 並在愛心圖案加上click事件，並執行AddLove的方法，onclick="AddLove(${data[i].StoreID})"，這邊方法用迴圈直接帶值去執行。
                 document.getElementById("tab-1").innerHTML += `<div class="row g-4" style="margin-top:20px;">
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden" id="#result">
@@ -125,8 +133,13 @@
 
 
     //-----------------------------------------------------------------------------------------------------------------------------------AddLove
+    //
+    // 新增我的最愛
+    //
+    // 這邊的參數storeid在渲染卡片時就有帶值進來了。
         function AddLove(storeid) {
             var apiurl = "http://localhost:44368/api/CustomerFavorite";
+            // test = 0 就是沒有登入會員。test != 0 就是有登入，前面有設定登入成功的話 test 會等於CustomerID。
             if(@test != 0) {
                     var yes = confirm('要加入我的最愛嗎？');
                     if (yes) {
@@ -173,8 +186,10 @@
                 })
             }
         }
-
-
+    //--------------------------------------------------------------------------------------------------------------------------------window.onload
+    //
+    // 在畫面載入時去跑，這邊是從其他頁面按搜尋後跳轉過來，所以會要渲染localstorage裡的資料。
+    //
     window.onload = function () {
         document.getElementById('btnsearch').addEventListener('click', fnSearch);
 
@@ -187,11 +202,11 @@
         for (let i = 0; i < localStorage.length; i++) {
 
             storeobj = localStorage.getItem(`${i}`).split('!##%');
-            /*console.log(storeobj);*/
+            // console.log(storeobj); 觀察用
 
             sID = storeobj[0].replace('"', '');
-            /*console.log(sssID);*/
-
+            // console.log(sssID); 觀察用
+            // 順序在其他頁面搜尋時，localStorage.setItem的時候就有先設定好了。
             storeName = storeobj[1].replace('"', '');
 
             storeClass = storeobj[2].replace('"', '');

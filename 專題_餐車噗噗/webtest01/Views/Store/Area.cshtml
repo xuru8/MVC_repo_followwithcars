@@ -231,21 +231,32 @@
 
 
 <script>
+    // 給搜尋按紐新增一個click事件
     document.getElementById('btnsearch').addEventListener('click', fnSearch);
 
+    //------------------------------------------------------------------------------------------------------------------------------window.onload
+    //
+    // 在畫面載入時去跑，這邊是從首頁按分類後跳轉過來，或是使用者重新進入這個頁面(查看店家詳細資料後返回)，所以會要渲染localstorage裡的資料。
+    //
     window.onload = function () {
         var storeobj;
         var storeobjarr = [];
+
+        // 先清空
         document.getElementById("result").innerHTML = "";
 
+        // 再從localstorage拉資料出來渲染，localStorage.getItem
         for (let i = 0; i < localStorage.length; i++) {
 
+            // localStorage.setItem時有用符號 !##% 去做區隔，以方便這邊取值時做分割。
+            // 用一個變數去接分割後的陣列
             storeobj = localStorage.getItem(`${i}`).split('!##%');
-            /*console.log(storeobj);*/
+            // console.log(storeobj); 觀察用
 
             sID = storeobj[0].replace('"', '');
-            /*console.log(sssID);*/
+            // console.log(sssID); 觀察用
 
+            // 順序在localStorage.setItem的時候就有先放好了
             storeName = storeobj[1].replace('"', '');
 
             storeClass = storeobj[2].replace('"', '');
@@ -288,7 +299,10 @@
         }
 /*        localStorage.clear();*/
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------fnSearch
+    //
+    // 搜尋店家
+    //
     function fnSearch() {
         // e.preventDefault();
         // let search = document.getElementById('btnsearch');
@@ -327,6 +341,10 @@
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------------AddLove
+    //
+    // 新增我的最愛
+    //
+    // 這邊的參數storeid在渲染卡片時就有帶值進來了。
         function AddLove(storeid) {
             var apiurl = "http://localhost:44368/api/CustomerFavorite";
             if(@test != 0) {
@@ -377,7 +395,10 @@
         }
 
 
-
+    //-----------------------------------------------------------------------------------------------------------------------------------台式
+    // 
+    //選擇台式後的方法(頁面渲染)
+    // 
     function getData台式() {
         document.getElementById("result").innerHTML = "";
 
@@ -391,8 +412,11 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
+                // 並在愛心圖案加上click事件，並執行AddLove的方法，onclick="AddLove(${data[i].StoreID})"，這邊方法用迴圈直接帶值去執行。
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
@@ -413,7 +437,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------港式
+    // 
+    //選擇港式後的方法(頁面渲染)
+    // 
     function getData港式() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -425,6 +452,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -447,7 +476,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------西式
+    // 
+    //選擇西式後的方法(頁面渲染)
+    // 
     function getData西式() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -459,6 +491,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -481,7 +515,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------日式
+    // 
+    //選擇日式後的方法(頁面渲染)
+    // 
     function getData日式() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -493,6 +530,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -515,7 +554,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------韓式
+    // 
+    //選擇韓式後的方法(頁面渲染)
+    // 
     function getData韓式() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -527,6 +569,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -549,7 +593,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------美式
+    // 
+    //選擇美式後的方法(頁面渲染)
+    // 
     function getData美式() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -561,6 +608,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -583,7 +632,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------早午餐
+    // 
+    //選擇早午餐後的方法(頁面渲染)
+    // 
     function getData早午餐() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -595,6 +647,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -617,7 +671,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------鍋物
+    // 
+    //選擇鍋物後的方法(頁面渲染)
+    // 
     function getData鍋物() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -629,6 +686,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -651,7 +710,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------炸物
+    // 
+    //選擇炸物後的方法(頁面渲染)
+    // 
     function getData炸物() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -663,6 +725,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -685,7 +749,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------咖啡
+    // 
+    //選擇咖啡後的方法(頁面渲染)
+    // 
     function getData咖啡() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -697,6 +764,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -719,7 +788,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------飲料
+    // 
+    //選擇飲料後的方法(頁面渲染)
+    // 
     function getData飲料() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -731,6 +803,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -753,7 +827,10 @@
             }
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------------------------甜點
+    // 
+    //選擇甜點後的方法(頁面渲染)
+    // 
     function getData甜點() {
         document.getElementById("result").innerHTML = "";
         localStorage.clear();
@@ -765,6 +842,8 @@
             for (let i = 0; i < data.length; i++) {
 
                 // !##%
+                // 用符號 !##% 去做區隔，以便分割。
+                //localStorage.setItem 儲存到localstorage，使用者如果重新進入這個頁面時(查看店家詳細資料後返回)就會跑這邊設定的window.onload，方便使用者查看。
                 localStorage.setItem(`${i}`, JSON.stringify(`${data[i].StoreID}!##%${data[i].Store_Name}!##%${data[i].Store_Class}!##%${data[i].Picture}!##%${data[i].Address_Area}!##%${data[i].Address_Detail}!##%${data[i].StarRating}!##%${data[i].ContentCount}!##%${data[i].Punch_Time}!##%${data[i].Phone}!##%${data[i].Introduce}!##%${data[i].Address_City}!##%`));
 
                 result.innerHTML += `<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
@@ -789,4 +868,4 @@
     }
 
 </script>
-<!-- 資料串接End -->
+<!-- 資料串接End   getdata for迴圈可弄成一個方法去帶就好-->

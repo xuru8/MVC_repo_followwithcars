@@ -10,21 +10,7 @@ namespace testWebApi.Controllers
 {
     public class StoreSearchController : ApiController
     {
-        trytryEntities db = new trytryEntities();
-
-        // GET: api/StorePost
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/StorePost/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-
+        trytryEntities db = new trytryEntities();       
 
         IQueryable storesSearch;
         string CusID;
@@ -32,80 +18,61 @@ namespace testWebApi.Controllers
         public IQueryable Post(receiveObj obj)
         {
             //
-            //要再補一個判斷有沒有登入過，
+            //要再補一個判斷有沒有登入過->改用Layout去做控制，登入成功的Navbar會用Session存值並顯示不同Navbar。
             //
-            //-----------------------------------------------有登入的跑法要帶CID，join我的最愛顯示-----------------------------------------------
-            //-----------------------------------------------目前只有沒登入的跑法-----------------------------------------------
-            //
-            //
-            // 先把前端帶過來的資料做整理，再去對應資料庫裡的資料
+            // 先把前端傳遞過來的JSON資料做字串內容整理，再去對應資料庫裡的資料。
             //
             if (obj.fdate != "")
             {
+                // 將搜尋的營業日期做字串修改，以便與資料庫內的資料做搜尋比較。
+                // Replace 改變原有的字串內容
                 searchTimeClass.nowdate = obj.fdate.Replace("-", "");
             }
-            //---
+            
             if (obj.ftime != "")
             {
+                //將搜尋的營業時間切割為陣列，以便與資料庫內的資料做搜尋比較。ex:06:00-12:00以"-"切割成，string[0]="06:00"，string[1]="12:00"。
+                // Split 切割字串
                 string[] times = obj.ftime.Split('-');
                 for (int i = 0; i < times.Length; i++)
                 {
                     if (i == 0)
                     {
+                        // ex:string[0]="06:00"，Replace成string[0]="0600"
                         searchTimeClass.fortime0 = times[i].Replace(":", "");
                     }
                     else if (i == 1)
                     {
+                        // ex:string[1]="12:00"，Replace成string[1]="1200"
                         searchTimeClass.fortime1 = times[i].Replace(":", "");
                     }
                 }
+
+                // 把搜尋的營業日期和營業時間[0]加起來(這邊相加是string)，然後再轉為int。
                 searchTimeClass.dateTimeANDsearchStart = Convert.ToInt64(searchTimeClass.nowdate + searchTimeClass.fortime0);
+
+                // 把搜尋的營業日期和營業時間[1]加起來(這邊相加是string)，然後再轉為int。
                 searchTimeClass.dateTimeANDsearchEnd = Convert.ToInt64(searchTimeClass.nowdate + searchTimeClass.fortime1);
             }
-
-            //if (obj.cid == null)
-            //{
-            //    CusID = "";
-            //}
-            //if (obj.fname == null)
-            //{
-            //    obj.fname = "";
-            //}
-            //if (obj.fclass == null)
-            //{
-            //    obj.fclass = "";
-            //}
-            //if (obj.fcity == null)
-            //{
-            //    obj.fcity = "";
-            //}
-            //if (obj.fdate == null)
-            //{
-            //    obj.fdate = "";
-            //}
-            //if (obj.ftime == null)
-            //{
-            //    obj.ftime = "";
-            //}
+            //----------------------------------------------------------------------------------------------------------------------------------------//
+            //         
+            // LINQ的contains搜尋資料庫時，資料庫的欄位資料不能為NULL值，與SQL語法的like%%會自動跳過null值不同。以下分為四個部分。
             //
+            //----------------------------------------------------------------------------------------------------------------------------------------//
             //
-            //
-
-            //LINQ的contains搜尋資料庫時，資料庫的欄位資料不能為NULL值，與SQL語法的like%%會自動跳過null值不同。
-            // 要決定搜尋的區域要以哪個table為主???
-            //
-            //-------------------------------------------------------沒登入的跑法-------------------------------------------------------
-            //
-            //狀態: 日期、時間，都有搜尋
+            //狀態1: 日期、時間，都有搜尋
             //
             if (obj.ftime != "" && obj.fdate != "")
             {
+                //
+                //狀態1-1: 日期、時間，都有搜尋，且依據搜尋時段是否為12:00~18:00做判斷區分。
+                //
                 if (Convert.ToInt32(searchTimeClass.fortime0) == 1200)
                 {
                     var tt =
                         from z in
                         (  // 4. 呈現出來的會是全部店家，把這些包在 z 裡面，再去做搜尋的where判斷。
-                                        from y in
+                            from y in
                             (
                                         // 3.整合成 y 之後，再去用 group by 和 order by 去整理後再 select 成要呈現的樣子。
                                         from x in
@@ -135,7 +102,8 @@ namespace testWebApi.Controllers
                             ) // x in(x 的裡面)
                                         join m in db.Message_Board
                                         on x.StoreID equals m.StoreID into g
-                                        from ssbm in g.DefaultIfEmpty()
+                                        from ssbm in g.DefaultIfEmpty()  
+                                        //如果 Sequence 不包含任何元素，則 DefaultIfEmpty 用於返回預設元素。此元素可以是型別的預設值或該型別的使用者定義例項。
                                         select new SearchStoreCard()
                                         {
                                             //在這邊把left JOIN後的值都先select出來並且計算好後再出去外層用group分類into成一個新的然後顯示
@@ -151,7 +119,7 @@ namespace testWebApi.Controllers
                                             Punch_Start = x.Punch_Start,
                                             Punch_End = x.Punch_End,
                                             Punch_Time = x.Punch_Time,
-                                            StarRating = Math.Round((double)g.Average(m => m.Star_Rating), 1),
+                                            StarRating = Math.Round((double)g.Average(m => m.Star_Rating), 1),  //平均後取到小數點後第一位
                                             ContentCount = g.Count(),
                                             CalendarID = x.CalendarID
                                         }
@@ -210,10 +178,10 @@ namespace testWebApi.Controllers
                                             Punch_Start = gro.Key.Punch_Start,
                                             Punch_End = gro.Key.Punch_End,
                                             Punch_Time = gro.Key.Punch_Time,
-                                            StarRating = gro.Key.StarRating == null ? 0 : gro.Key.StarRating, //如果等於null值時變成0，如果不等於就顯示正常的
+                                            StarRating = gro.Key.StarRating == null ? 0 : gro.Key.StarRating, //如果等於null值(尚未有評論)時變成0，如果不等於就顯示正常的
                                             ContentCount = gro.Key.ContentCount
                                         }
-                        ).AsEnumerable() // z in (z 的裡面)                       
+                        ).AsEnumerable() // z in (z 的裡面)         
                         where z.CalendarID == 1
                              & z.Store_Name.Contains(obj.fname)
                         & z.Store_Class.Contains(obj.fclass)
@@ -257,8 +225,9 @@ namespace testWebApi.Controllers
 
                     return storesSearch;
                 }
+                //----------------------------------------------------------------------------------------------------------------------------------------//                
                 //
-                // 狀態: 日期、時間，都有搜尋後再依據搜尋時段是否為12:00~18:00做判斷區分
+                // 狀態1-2: 日期、時間，都有搜尋後再依據搜尋時段是否為12:00~18:00做判斷區分，else為12:00~18:00以外的時段。
                 //
                 else
                 {
@@ -407,8 +376,9 @@ namespace testWebApi.Controllers
                     return storesSearch;
                 }
             }
+            //----------------------------------------------------------------------------------------------------------------------------------------//                
             //
-            // 狀態: 有搜尋日期，沒搜尋時間
+            // 狀態2: 有搜尋日期，沒搜尋時間
             // 
             else if (obj.ftime == "" && obj.fdate != "")
             {
@@ -547,11 +517,15 @@ namespace testWebApi.Controllers
                 storesSearch = tt.AsQueryable();
                 return storesSearch;
             }
+            //----------------------------------------------------------------------------------------------------------------------------------------//
             //
-            // 狀態: 有搜尋時間，沒有搜尋日期
+            // 狀態3: 有搜尋時間，沒有搜尋日期。
             //
             else if (obj.ftime != "" && obj.fdate == "")
             {
+                //
+                // 狀態3-1: 有搜尋時間，沒有搜尋日期，再依據搜尋時間是否為12:00~18:00做判斷區分
+                //
                 if (Convert.ToInt32(searchTimeClass.fortime0) == 1200)
                 {
                     var tt =
@@ -698,8 +672,9 @@ namespace testWebApi.Controllers
                     storesSearch = tt.AsQueryable();
                     return storesSearch;
                 }
+                //----------------------------------------------------------------------------------------------------------------------------------------//
                 //
-                // 狀態: 有搜尋時間，沒有搜尋日期，再依據搜尋時間是否為12:00~18:00做判斷區分
+                // 狀態3-2: 有搜尋時間，沒有搜尋日期，再依據搜尋時間是否為12:00~18:00做判斷區分，else為12:00-18:00以外的時段。
                 //
                 else
                 {
@@ -847,8 +822,9 @@ namespace testWebApi.Controllers
                     return storesSearch;
                 }
             }
+            //----------------------------------------------------------------------------------------------------------------------------------------//
             //
-            // 狀態: 沒有搜尋日期 也沒有搜尋時間
+            // 狀態4: 沒有搜尋日期 也沒有搜尋時間
             //
             else
             {
@@ -988,7 +964,7 @@ namespace testWebApi.Controllers
                 return storesSearch;
             }
             //
-            //-----------------------------------------------有登入的跑法要帶CID，join我的最愛顯示-----------------------------------------------
+            //-----------------------------------------------有登入的跑法要帶CID，join我的最愛顯示(未實作)-----------------------------------------------
             //
 
         }
